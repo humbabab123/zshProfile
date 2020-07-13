@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   aliases.bsh
+#   aliases.sh
 #
 ################################################################################
 #
@@ -14,32 +14,9 @@
 #       Aug 20, 2018    Inital Version
 #       Jun 01, 2019    Added support for Darwin and Linux
 #       Jan 09, 2020    Reorganized file
+#       Jul 12, 2020    Merged .bsh and .zsh version into one .sh file
 #
 ################################################################################
-
-################################################################################
-#
-#   Platform specific aliases
-#
-################################################################################
-if [ `uname` = "Linux" ]; then
-    alias ls="/bin/ls -CF --color=auto"
-
-    alias tool="cd /group/lab/tool/$USER"
-    alias work="cd /proj/avtr/work/$USER"
-    
-    #   Useful OZ command aliases
-    alias ozdump="oz app dump --av"
-    alias ozinfo="oz envinfo"
-    alias add="ozadd $1"
-    alias rem="ozrem $1"
-
-    #   Useful NVidia command aliases
-    alias nvm="nvidia-smi -l 1 -q -d MEMORY"
-
-elif [ `uname` = "Darwin" ]; then
-    alias ls="/bin/ls -CFG"
-fi
 
 
 ################################################################################
@@ -51,6 +28,8 @@ alias c="clear"
 alias x="xrefresh -black"
 alias h="history"
 alias j="jobs"
+alias k="kill"
+alias p="pwd"
 
 #   Pstree command aliases
 alias ptree="pstree -cG"
@@ -59,18 +38,19 @@ alias ptree="pstree -cG"
 alias tree="tree -CA"
 
 #   Listing aliases
-alias la="ls -lah"
-alias ll="ls -lh"
+alias ls="/bin/ls -CFGh"
+alias la="ls -la"
+alias ll="ls -l"
 alias lla="ls -la"
-alias lt="ls -lth"
-alias ltr="ls -ltrh"
+alias lt="ls -lt"
+alias ltr="ls -ltr"
 
 #   LSF listing aliases
-alias lsf="$HOME/scripts/lsseq"
+alias lsf="$HOME/scripts/lsf"
 
 #   Useful navigation aliases
 alias dld="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
 alias dev="cd $HOME/Development"
 
-alias ssh="ssh -Y"
+
