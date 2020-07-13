@@ -18,8 +18,8 @@
 #
 ################################################################################
 PROJECT := $(notdir $(shell pwd))
-SOURCES	:= $(wildcard *.bsh)
-OBJECTS	:= $(patsubst %.bsh,%,$(SOURCES))
+SOURCES	:= $(wildcard *.zsh)
+OBJECTS	:= $(patsubst %.zsh,%,$(SOURCES))
 
 BUILD_LOCATION		:= build
 DIST_LOCATION 		:= $(HOME)
@@ -37,6 +37,12 @@ VPATH				:= $(BUILD_LOCATION)
 	@mkdir -p $(BUILD_LOCATION)
 	@echo "    \033[37;1mBuilding:\033[0m $@"
 	@cp $< $(BUILD_LOCATION)/$@
+
+% : %.zsh
+	@mkdir -p $(BUILD_LOCATION)
+	@echo "    \033[37;1mBuilding:\033[0m $@"
+	@cp $< $(BUILD_LOCATION)/$@
+
 
 
 ###############################################################################
