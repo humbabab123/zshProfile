@@ -40,50 +40,6 @@ PROMPT_COMMAND="updatePrompt"
 #   Functions
 #
 ################################################################################
-function designer()
-{
-    if [ $PLATFORM == "Linux" ]; then
-        #   Make sure Substance Designer is loaded in our oz environment
-        ozadd "Substance-$SUBSTANCE_DESIGNER_VERSION"
-
-        #   Launch Substance Designer
-        echo -e "\033[37;1mLaunching SubstanceDesigner-$SUBSTANCE_DESIGNER_VERSION...\033[0m"
-        SubstanceDesigner
-
-    elif [ $PLATFORM == "Darwin" ]; then
-        #   Make sure Substance Designer is installed
-        SUBSTANCE_DESIGNER_LOCATION="/Applications/Substance Designer.app/Contents/MacOS"
-
-        #   Launch Substance Designer
-        echo -e "\033[37;1mLaunching Substance Designer...\033[0m"
-        "$SUBSTANCE_DESIGNER_LOCATION/Substance Designer"
-    fi
-}
-
-function back()
-{
-    #   This function creates a gzipped tarball of the file/directory supplied.
-    if [ -z $1 ]; then
-        echo -e "\033[37;1mA file or directory must be specified...\033[0m"
-    else
-        DIR="${1/\//}"
-        DATE=`date "+%m%d%Y_%H%M%S"`
-        TGZ=$DIR-$DATE.tgz
-
-        echo -e "Creating Archive \033[33;1m$DIR\033[0m ---> \033[33;1m$TGZ\033[0m"
-        tar cfz $TGZ $DIR
-    fi
-}
-
-function clean()
-{
-    #   Clean up and remove all .bak files
-    rm -f *.bak
-
-    #   Clean up and remove all .tgz files
-    rm -f *.tgz
-}
-
 function updatePath()
 {
     if [ `echo $PATH | grep -c "$HOME/scripts"` == 0 ]; then PATH="$HOME/scripts:$PATH"; fi

@@ -33,11 +33,6 @@ VPATH				:= $(BUILD_LOCATION)
 #   Pattern Rules
 #
 ###############################################################################
-% : %.bsh
-	@mkdir -p $(BUILD_LOCATION)
-	@echo "    \033[37;1mBuilding:\033[0m $@"
-	@cp $< $(BUILD_LOCATION)/$@
-
 % : %.zsh
 	@mkdir -p $(BUILD_LOCATION)
 	@echo "    \033[37;1mBuilding:\033[0m $@"
