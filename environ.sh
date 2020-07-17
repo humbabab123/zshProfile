@@ -48,21 +48,8 @@ if [ -d "/Volumes/proj" ]; then
     PROJROOT="/Volumes/proj/"
 fi
 
-#  Append to the history file, don't overwrite it
-shopt -s histappend
-
-#  Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-
-set -o vi	    	    # Set VI keyboard bindings for the terminal
-
-
-
 #  Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-
 
 ################################################################################
 #
@@ -101,65 +88,17 @@ function creator()
     eval "$QTCREATOR_LOCATION/Qt\ Creator"
 }
 
-function maya()
-{
-    MAYA_DISABLE_CER=1
-    MAYA_DISABLE_CIP=1
-    MAYA_USE_MALLOC=1
-
-    if [ $PLATFORM == "Linux" ]; then
-        #   Make sure Maya is loaded in our oz environment
-        if  [ `ozinfo | grep -c " - maya"` == 0 ]; then
-            echo -e "\033[31;1mError: Maya is not part of the current oz environment...\033[0m"
-        else
-            echo -e "\033[37;1mLaunching Maya...\033[0m"
-            $MAYA_LOCATION/bin/maya $@
-        fi
-    elif [ $PLATFORM == "Darwin" ]; then
-        #   Set the MAYA_LOCATION Environment variable
-        MAYA_LOCATION="/Applications/Autodesk/maya$MAYA_VERSION/Maya.app/Contents"
-
-        echo -e "\033[37;1mLaunching Maya...\033[0m"
-        $MAYA_LOCATION/bin/maya $@
-    fi
-}
-
-function rv()
-{
-    if [ $PLATFORM == "Linux" ]; then
-         #   Make sure RV is loaded in our oz environment
-        if  [ `ozinfo | grep -c " - rv"` == 0 ]; then
-            echo -e "\033[31;1mError: RV is not part of the current oz environment...\033[0m"
-        else
-            #   Launch Autodesk RV
-            if [ -d $RV_LOCATION ]; then
-                echo -e "\033[37;1mLaunching RV...\033[0m"
-                eval "$RV_LOCATION/bin/rv $@"
-            fi
-        fi
-    elif [ $PLATFORM == "Darwin" ]; then
-        #   Set the RV_LOCATION Environment Variable
-        RV_LOCATION="/Applications/RV.app/Contents/MacOS"
-
-        #   Launch Autodesk RV
-        if [ -d $RV_LOCATION ]; then
-            echo -e "\033[37;1mLaunching RV...\033[0m"
-            eval "$RV_LOCATION/RV $@"
-        fi
-    fi
-}
-
 function updatePath()
 {
     #   Add $HOME/scripts to the PATH
-    if [ `echo $PATH | grep -c "$HOME/scripts"` == 0 ]; then PATH="$HOME/scripts:$PATH"; fi
+    #if [ `echo $PATH | grep -c "$HOME/scripts"` == 0 ]; then PATH="$HOME/scripts:$PATH"; fi
     
     #   Add . to the PATH
-    if [ `echo $PATH | grep -c "\."` == 0 ]; then PATH=".:$PATH"; fi
+    #if [ `echo $PATH | grep -c "\."` == 0 ]; then PATH=".:$PATH"; fi
     
     #   Add MacPorts folders to the PATH
-    if [ `echo $PATH | grep -c "/opt/local/sbin"` == 0 ]; then PATH="/opt/local/sbin:$PATH"; fi
-    if [ `echo $PATH | grep -c "/opt/local/bin"` == 0 ]; then PATH="/opt/local/bin:$PATH"; fi
+    PATH="/opt/local/sbin:$PATH"   # TODO: This is not ideal. Need to find a way to test the PATH
+    PATH="/opt/local/bin:$PATH"
 }
 
 function updatePrompt()

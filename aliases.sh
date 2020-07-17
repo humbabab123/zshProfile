@@ -25,7 +25,6 @@
 #
 ################################################################################
 alias c="clear"
-alias x="xrefresh -black"
 alias h="history"
 alias j="jobs"
 alias k="kill"
@@ -39,6 +38,7 @@ alias tree="tree -CA"
 
 #   Listing aliases
 alias ls="/bin/ls -CFGh"
+alias l="ls -la"
 alias la="ls -la"
 alias ll="ls -l"
 alias lla="ls -la"

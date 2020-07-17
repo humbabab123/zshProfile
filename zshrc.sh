@@ -1,14 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
- # Path to your oh-my-zsh installation.
-  export ZSH="/Users/jeffreybillings/.oh-my-zsh"
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/jeffreybillings/.oh-my-zsh"
 
- # Set name of the theme to load --- if set to "random", it will
- # load a random theme each time oh-my-zsh is loaded, in which case,
- # to know which specific one was loaded, run: echo $RANDOM_THEME
- # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-  ZSH_THEME="robbyrussell"
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -27,7 +27,7 @@
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
- DISABLE_UPDATE_PROMPT="true"
+DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=13
@@ -94,8 +94,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 #  Example aliases
-  alias zshconfig="mate ~/.zshrc"
-  alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="mate ~/.zshrc"
+alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -129,6 +129,6 @@ if [ -e $HOME/.aliases ]; then
     source $HOME/.aliases
 fi
 
-
 #   Run my updatePath function to make sure my PATH variable is what I expect
 updatePath
+#updatePrompt
