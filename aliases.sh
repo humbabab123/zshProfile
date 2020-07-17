@@ -53,4 +53,7 @@ alias dld="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
 alias dev="cd $HOME/Development"
 
+# Open Application aliases
+alias sub="open -a Sublime\ Text.app"
+
 
