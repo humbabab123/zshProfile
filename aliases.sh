@@ -55,6 +55,5 @@ alias dev="cd $HOME/Development"
 
 # Open Application aliases
 alias subl="open -a Sublime\ Text.app"
-
-
-
+alias st="subl"
+alias stt="subl"
