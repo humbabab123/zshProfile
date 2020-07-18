@@ -44,6 +44,7 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias lt="ls -lt"
 alias ltr="ls -ltr"
+alias p="pwd"
 
 #   LSF listing aliases
 alias lsf="$HOME/scripts/lsf"
