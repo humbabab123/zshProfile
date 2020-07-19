@@ -58,3 +58,4 @@ alias dev="cd $HOME/Development"
 alias subl="open -a Sublime\ Text.app"
 alias st="subl"
 alias stt="subl"
+alias ofd='open_command $PWD'
