@@ -18,7 +18,7 @@
 
 ###############################################################################
 #
-#   Environment Settings
+#   Source This User's Environment Settings
 #
 ###############################################################################
 if [ -e $HOME/.environ ]; then
@@ -28,7 +28,7 @@ fi
 
 ###############################################################################
 #
-#   Alias Settings
+#   Source This User's Alias Settings
 #
 ###############################################################################
 if [ -e $HOME/.aliases ]; then
@@ -38,13 +38,9 @@ fi
 
 ###############################################################################
 #
-#   Completion Settings
+#   Source This User's Completion Settings 
 #
 ###############################################################################
 if [ -e $HOME/.bash_completion ]; then
     source $HOME/.bash_completion
 fi
-
-
-#   Run my updatePath function to make sure my PATH variable is what I expect
-updatePath

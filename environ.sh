@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   .environ
+#   environ.sh
 #
 ################################################################################
 #
@@ -11,14 +11,10 @@
 #       Jayme Wilkinson
 #
 #   HISTORY
-#       Aug 20, 2018	Initial Version
-#       Oct 11, 2018	Added mstat function
-#       Nov 21, 2018    Added doc/dev aliases
-#       Jun 11, 2019    Added work and tool aliases
-#       Jun 12, 2019    Updated completion rules
-#       Jun 13, 2019    Added TotalView function
-#       Oct 10, 2019    Added PostViz Oz alias
-#       Jul 12, 2020    Merged .bsh and .zsh verisons into one .sh file
+#       Aug 20, 2018 - Initial Version
+#       Nov 21, 2018 - Jayme - Added doc/dev aliases
+#       Jul 12, 2020 - Jayme - Merged .bsh and .zsh verisons into one .sh file
+#       Jul 19, 2020 - Jayme - Added logic to support ZSH and BASH commands
 #
 ################################################################################
 
@@ -28,45 +24,67 @@
 #
 ################################################################################
 PLATFORM=`uname`
-
 GREP_COLORS="ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=3"
-
 PROMPT_DIRTRIM=3
-PROMPT_COMMAND="updatePrompt"
 
-#  Don't put duplicate lines in the history.
-#  ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
-HISTTIMEFORMAT="%Y.%m.%d %T "
+###############################################################################
+#
+#   Define ZSH Specific Settings
+#
+###############################################################################
+if [ ${ZSH_VERSION} ]; then
+    #   Set the prompt
+    precmd() { updatePrompt; }
 
-#  To setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=4500
-HISTFILESIZE=4500
+    #   Set some setopt settings
+    setopt autocd 
+    setopt autopushd
+    setopt pushdignoredups
+    
+    #   Fix zsh's completion rule order for the make commando
+    zstyle ':completion:*:*:make:*' tag-order 'targets'
+    autoload -U compinit && compinit
+
+fi
+
+###############################################################################
+#
+#   Define BASH Specific Settings
+#
+###############################################################################
+if [ ${BASH_VERSION} ]; then
+    PROMPT_COMMAND=updatePrompt
+
+    #  Don't put duplicate lines in the history.
+    #  ... or force ignoredups and ignorespace
+    HISTCONTROL=ignoredups:ignorespace
+    HISTTIMEFORMAT="%Y.%m.%d %T "
+
+    #  To setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+    HISTSIZE=4500
+    HISTFILESIZE=4500
+
+    #   Append to the history file, don't overwrite it
+    shopt -s histappend
+
+    #  Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+    shopt -s checkwinsize
+
+    # Set VI keyboard bindings for the terminal
+    set -o vi
+
+    #  Make less more friendly for non-text input files, see lesspipe(1)
+    [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+fi
 
 #   Set the PROJROOT Environment Variable if the path exists
 if [ -d "/Volumes/proj" ]; then
     PROJROOT="/Volumes/proj/"
 fi
 
-#  Append to the history file, don't overwrite it
-shopt -s histappend
-
-#  Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-
-set -o vi	    	    # Set VI keyboard bindings for the terminal
-
-
-
-#  Make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-
-
 ################################################################################
 #
-#   Functions
+#   Define User's Functions
 #
 ################################################################################
 function back()
@@ -152,20 +170,26 @@ function rv()
 function updatePath()
 {
     #   Add $HOME/scripts to the PATH
-    if [ `echo $PATH | grep -c "$HOME/scripts"` == 0 ]; then PATH="$HOME/scripts:$PATH"; fi
+    if [ `echo $PATH | grep -c "$HOME/scripts"` = 0 ]; then PATH="$HOME/scripts:$PATH"; fi
     
     #   Add . to the PATH
-    if [ `echo $PATH | grep -c "\."` == 0 ]; then PATH=".:$PATH"; fi
+    if [ `echo $PATH | grep -c "\."` = 0 ]; then PATH=".:$PATH"; fi
     
     #   Add MacPorts folders to the PATH
-    if [ `echo $PATH | grep -c "/opt/local/sbin"` == 0 ]; then PATH="/opt/local/sbin:$PATH"; fi
-    if [ `echo $PATH | grep -c "/opt/local/bin"` == 0 ]; then PATH="/opt/local/bin:$PATH"; fi
+    if [ `echo $PATH | grep -c "/opt/local/sbin"` = 0 ]; then PATH="/opt/local/sbin:$PATH"; fi
+    if [ `echo $PATH | grep -c "/opt/local/bin"` = 0 ]; then PATH="/opt/local/bin:$PATH"; fi
 }
 
 function updatePrompt()
 {
-    #   Set the command line prompt
-    PS1="\e[93m\]\!\[\e[97m\]:\[\e[96m\]\u\[\e[93m\]@\[\e[96m\]\h\[\e[97m\]:\[\e[32m\]\w\[\e[97m\] > \[\e[0m\]"
+    if [ ${ZSH_VERSION} ]; then
+        # Zsh prompt expansion syntax
+        PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
+       
+    elif [ ${BASH_VERSION} ]; then
+        # Bash prompt expansion syntax
+        PS1="\e[93m\]\!\[\e[97m\]:\[\e[96m\]\u\[\e[93m\]@\[\e[96m\]\h\[\e[97m\]:\[\e[32m\]\w\[\e[97m\] > \[\e[0m\]"
+    fi
 }
 
 function vscode()
@@ -177,3 +201,7 @@ function vscode()
     echo -e "\033[37;1mLaunching VSCode...\033[0m"
     eval "$VSCODE_LOCATION/code"
 }
+
+#   Before sending control back to the startup file make sure the path has been updated
+updatePath
+

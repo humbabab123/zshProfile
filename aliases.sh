@@ -39,18 +39,14 @@ alias tree="tree -CA"
 
 #   Listing aliases
 alias ls="/bin/ls -CFGh"
+alias l="ls -la"
 alias la="ls -la"
 alias ll="ls -l"
 alias lla="ls -la"
 alias lt="ls -lt"
 alias ltr="ls -ltr"
 
-#   LSF listing aliases
-alias lsf="$HOME/scripts/lsf"
-
 #   Useful navigation aliases
 alias dld="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
 alias dev="cd $HOME/Development"
-
-

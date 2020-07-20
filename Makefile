@@ -18,8 +18,8 @@
 #
 ################################################################################
 PROJECT := $(notdir $(shell pwd))
-SOURCES	:= $(wildcard *.zsh)
-OBJECTS	:= $(patsubst %.zsh,%,$(SOURCES))
+SOURCES	:= $(wildcard *.sh)
+OBJECTS	:= $(patsubst %.sh,%,$(SOURCES))
 
 BUILD_LOCATION		:= build
 DIST_LOCATION 		:= $(HOME)
