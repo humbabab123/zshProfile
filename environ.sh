@@ -45,6 +45,19 @@ if [ ${ZSH_VERSION} ]; then
     zstyle ':completion:*:*:make:*' tag-order 'targets'
     autoload -U compinit && compinit
 
+    #   Adjust ZSH's history to be more useful like BASH
+    HISTFILE=$HOME/.zsh_history
+    HISTSIZE=4500
+    HISTFILESIZE=4500
+    SAVEHIST=4500
+    HISTCONTROL=ignoredups:ignorespace
+    HISTTIMEFORMAT="%Y.%m.%d %T "
+    
+    setopt extended_history
+    setopt appendhistory
+
+    #   Set ZSH's keyboard bindings to VI for the terminal
+    bindkey -v
 fi
 
 ###############################################################################
@@ -53,16 +66,10 @@ fi
 #
 ###############################################################################
 if [ ${BASH_VERSION} ]; then
-    PROMPT_COMMAND=updatePrompt
-
     #  Don't put duplicate lines in the history.
     #  ... or force ignoredups and ignorespace
     HISTCONTROL=ignoredups:ignorespace
     HISTTIMEFORMAT="%Y.%m.%d %T "
-
-    #  To setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-    HISTSIZE=4500
-    HISTFILESIZE=4500
 
     #   Append to the history file, don't overwrite it
     shopt -s histappend
@@ -70,7 +77,7 @@ if [ ${BASH_VERSION} ]; then
     #  Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
     shopt -s checkwinsize
 
-    # Set VI keyboard bindings for the terminal
+    #   Set BASH's keyboard bindings to VI for the terminal
     set -o vi
 
     #  Make less more friendly for non-text input files, see lesspipe(1)
@@ -119,65 +126,17 @@ function creator()
     eval "$QTCREATOR_LOCATION/Qt\ Creator"
 }
 
-function maya()
-{
-    MAYA_DISABLE_CER=1
-    MAYA_DISABLE_CIP=1
-    MAYA_USE_MALLOC=1
-
-    if [ $PLATFORM == "Linux" ]; then
-        #   Make sure Maya is loaded in our oz environment
-        if  [ `ozinfo | grep -c " - maya"` == 0 ]; then
-            echo -e "\033[31;1mError: Maya is not part of the current oz environment...\033[0m"
-        else
-            echo -e "\033[37;1mLaunching Maya...\033[0m"
-            $MAYA_LOCATION/bin/maya $@
-        fi
-    elif [ $PLATFORM == "Darwin" ]; then
-        #   Set the MAYA_LOCATION Environment variable
-        MAYA_LOCATION="/Applications/Autodesk/maya$MAYA_VERSION/Maya.app/Contents"
-
-        echo -e "\033[37;1mLaunching Maya...\033[0m"
-        $MAYA_LOCATION/bin/maya $@
-    fi
-}
-
-function rv()
-{
-    if [ $PLATFORM == "Linux" ]; then
-         #   Make sure RV is loaded in our oz environment
-        if  [ `ozinfo | grep -c " - rv"` == 0 ]; then
-            echo -e "\033[31;1mError: RV is not part of the current oz environment...\033[0m"
-        else
-            #   Launch Autodesk RV
-            if [ -d $RV_LOCATION ]; then
-                echo -e "\033[37;1mLaunching RV...\033[0m"
-                eval "$RV_LOCATION/bin/rv $@"
-            fi
-        fi
-    elif [ $PLATFORM == "Darwin" ]; then
-        #   Set the RV_LOCATION Environment Variable
-        RV_LOCATION="/Applications/RV.app/Contents/MacOS"
-
-        #   Launch Autodesk RV
-        if [ -d $RV_LOCATION ]; then
-            echo -e "\033[37;1mLaunching RV...\033[0m"
-            eval "$RV_LOCATION/RV $@"
-        fi
-    fi
-}
-
 function updatePath()
 {
     #   Add $HOME/scripts to the PATH
     if [ `echo $PATH | grep -c "$HOME/scripts"` = 0 ]; then PATH="$HOME/scripts:$PATH"; fi
     
     #   Add . to the PATH
-    if [ `echo $PATH | grep -c "\."` = 0 ]; then PATH=".:$PATH"; fi
+    if [ `echo $PATH | grep -c "."` = 0 ]; then PATH=".:$PATH"; fi
     
     #   Add MacPorts folders to the PATH
-    if [ `echo $PATH | grep -c "/opt/local/sbin"` = 0 ]; then PATH="/opt/local/sbin:$PATH"; fi
     if [ `echo $PATH | grep -c "/opt/local/bin"` = 0 ]; then PATH="/opt/local/bin:$PATH"; fi
+    if [ `echo $PATH | grep -c "/opt/local/sbin"` = 0 ]; then PATH="/opt/local/sbin:$PATH"; fi
 }
 
 function updatePrompt()
@@ -198,10 +157,9 @@ function vscode()
     VSCODE_LOCATION="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin"
 
     #   Launch VSCode
-    echo -e "\033[37;1mLaunching VSCode...\033[0m"
+    echo "\033[37;1mLaunching VSCode...\033[0m"
     eval "$VSCODE_LOCATION/code"
 }
 
 #   Before sending control back to the startup file make sure the path has been updated
 updatePath
-

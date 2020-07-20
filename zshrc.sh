@@ -32,7 +32,7 @@ if [ -d $HOME/.oh-my-zsh ]; then
     # load a random theme each time oh-my-zsh is loaded, in which case,
     # to know which specific one was loaded, run: echo $RANDOM_THEME
     # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-    ZSH_THEME="robbyrussell"
+    ZSH_THEME="robbyrussel"
 
     # Set list of themes to pick from when loading at random
     # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -93,6 +93,8 @@ if [ -d $HOME/.oh-my-zsh ]; then
     # Example format: plugins=(rails git textmate ruby lighthouse)
     # Add wisely, as too many plugins slow down shell startup.
     plugins=(zsh-autosuggestions)
+    plugins=(... themes)
+    plugins=(... zsh_reload)
     source $ZSH/oh-my-zsh.sh
 
     # User configuration
@@ -121,9 +123,7 @@ if [ -d $HOME/.oh-my-zsh ]; then
     alias zshconfig="mate ~/.zshrc"
     alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
     # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 
     # To activate the syntax highlighting, add the following at the end of your .zshrc:
     # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -134,6 +134,7 @@ if [ -d $HOME/.oh-my-zsh ]; then
 
     # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
 
 ################################################################################
 #

@@ -55,18 +55,6 @@ clean:
 	@echo "\033[1mClean Finished...\033[0m"
 
 
-info:
-	@echo "         PROJECT : $(PROJECT)"
-	@echo "         SOURCES : \c"
-	@$(foreach SOURCE, $(SOURCES), echo "$(SOURCE)\n                   \c";)
-	@echo ""
-	@echo "         OBJECTS : \c"
-	@$(foreach OBJECT, $(OBJECTS), echo "$(OBJECT)\n                   \c";)
-	@echo ""
-	@echo "INSTALL_LOCATION : $(INSTALL_LOCATION)"
-	@echo "           VPATH : $(VPATH)"
-
-
 inst: default
 	@$(foreach OBJECT, $(shell ls -A $(BUILD_LOCATION)),						\
 		echo "    \033[37;1mInstalling: \033[0m$(OBJECT)";	   				 	\

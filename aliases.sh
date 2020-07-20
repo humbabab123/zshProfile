@@ -25,7 +25,6 @@
 #
 ################################################################################
 alias c="clear"
-alias x="xrefresh -black"
 alias h="history"
 alias j="jobs"
 alias k="kill"
@@ -45,8 +44,15 @@ alias ll="ls -l"
 alias lla="ls -la"
 alias lt="ls -lt"
 alias ltr="ls -ltr"
+alias p="pwd"
 
 #   Useful navigation aliases
 alias dld="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
 alias dev="cd $HOME/Development"
+
+# Open Application aliases
+alias subl="open -a Sublime\ Text.app"
+alias st="subl"
+alias stt="subl"
+alias ofd='open_command $PWD'
