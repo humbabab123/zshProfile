@@ -144,10 +144,22 @@ function updatePrompt()
     if [ ${ZSH_VERSION} ]; then
         # Zsh prompt expansion syntax
         #PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-        PS1="%B"
-        PS1+="%(?.%F{green}.%F{red})%!"
-        PS1+="%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white}"
-        PS1+=" > %b%f"
+        #PS1="%B"
+        #PS1+="%(?.%F{green}.%F{red})%!"
+        #PS1+="%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white}"
+        #PS1+=" > %b%f"
+        
+        # Zsh prompt expansion syntax (Swami prompt)
+        # PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
+        # (JB Prompt) 
+        # Full PATH,Active Dir, Colors
+        # PS1='%~% > %b%f'
+        # PS1='%d%(%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
+        PS1='%d%  > %b%f'
+        # PS1='%d(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
+        # Set Right Prompt, Date Time
+        # RPS1='%D{%F %T}'
+        RPS1=%F{red}'%t %W%F'    
 
     elif [ ${BASH_VERSION} ]; then
         # Bash prompt expansion syntax

@@ -18,6 +18,9 @@
 #
 ################################################################################
 PROJECT := $(notdir $(shell pwd))
+
+DATE := `date +"%m%d%Y_%H%M"`
+
 SOURCES	:= $(wildcard *.sh)
 OBJECTS	:= $(patsubst %.sh,%,$(SOURCES))
 
@@ -60,6 +63,10 @@ inst: default
 		echo "    \033[37;1mInstalling: \033[0m$(OBJECT)";	   				 	\
 		cp $(BUILD_LOCATION)/$(OBJECT) $(RELEASE_LOCATION)/.$(OBJECT);			)
 	@echo "\033[1mInstall Finished....\033[0m"
+
+
+package:
+	tar cvfz $(PROJECT)-$(DATE).tgz *.sh Makefile
 
 
 uninst:		
