@@ -1,6 +1,29 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+##############################################################################
+#   zshrc.sh
+#
+###############################################################################
+#
+#   DESCRIPTION
+#       This file contains zsh startup commands to setup a user environment. 
+#
+#   AUTHOR
+#       Jayme Wilkinson & Jeff :)
+#   
+#   HISTORY
+#       Jul 12, 2020 - Initial Version
+#       Jul 19, 2020 - Merged oh my zsh startup to this file if it is installed.
+#       Jul 20. 2020 - Jeff Added Experimental Settings 10:39PM
+###############################################################################
+
+###############################################################################
+#
+#   Source This User's "oh my zsh" Settings
+#
+###############################################################################
+if [ -d $HOME/.oh-my-zsh ]; then
+    # If you come from bash you might have to change your $PATH.
+    # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -68,11 +91,15 @@ ENABLE_CORRECTION="true"
 #  Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(zsh-autosuggestions)
-# plugins=(... themes)
-# plugins=(... zsh_reload)
+plugins=(git, zsh-syntax-highlighting, zsh-autosuggestions)
 
-# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+plugins=(zsh-autosuggestions)
+plugins=(... themes)
+plugins=(... zsh_reload)
+
+source $ZSH/oh-my-zsh.sh
+
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # User configuration
 
@@ -95,18 +122,13 @@ ENABLE_CORRECTION="true"
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
+
 #  Example aliases
-alias zshconfig="mate ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
+#  alias zshconfig="mate ~/.zshrc"
+#  alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
-
-source $ZSH/oh-my-zsh.sh
-
 
 # To activate the syntax highlighting, add the following at the end of your .zshrc:
 
@@ -131,10 +153,11 @@ fi
 
 #   Run my updatePath function to make sure my PATH variable is what I expect
 updatePath
-#updatePrompt
+#  updatePrompt
 
+   export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+   source /Users/jeffreybillings/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+   source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-
-
-
-
+#  
