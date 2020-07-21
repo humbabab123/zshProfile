@@ -25,7 +25,7 @@
 ################################################################################
 PLATFORM=`uname`
 GREP_COLORS="ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=3"
-PROMPT_DIRTRIM=3
+
 
 ###############################################################################
 #
@@ -143,8 +143,12 @@ function updatePrompt()
 {
     if [ ${ZSH_VERSION} ]; then
         # Zsh prompt expansion syntax
-        PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-       
+        #PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
+        PS1="%B"
+        PS1+="%(?.%F{green}.%F{red})%!"
+        PS1+="%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white}"
+        PS1+=" > %b%f"
+
     elif [ ${BASH_VERSION} ]; then
         # Bash prompt expansion syntax
         PS1="\e[93m\]\!\[\e[97m\]:\[\e[96m\]\u\[\e[93m\]@\[\e[96m\]\h\[\e[97m\]:\[\e[32m\]\w\[\e[97m\] > \[\e[0m\]"
