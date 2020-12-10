@@ -26,6 +26,13 @@
 PLATFORM=`uname`
 GREP_COLORS="ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=3"
 
+#   Git Environment Variables
+GIT_PS1_DESCRIBE_STYLE="contains"
+GIT_PS1_SHOWCOLORHINTS=True
+GIT_PS1_SHOWDIRTYSTATE=True
+GIT_PS1_SHOWUNTRACKEDFILES=True
+GIT_PS1_SHOWUPSTREAM="auto"
+GIT_PS1_STATESEPARATOR=' '
 
 ###############################################################################
 #
@@ -40,11 +47,20 @@ if [ ${ZSH_VERSION} ]; then
     setopt autocd 
     setopt autopushd
     setopt pushdignoredups
+    setopt extended_history
+    setopt appendhistory
     
     #   Fix zsh's completion rule order for the make commando
     zstyle ':completion:*:*:make:*' tag-order 'targets'
     autoload -U compinit && compinit
 
+    # Set up the prompt (with git branch name)
+    setopt PROMPT_SUBST
+
+    #   Load version control information
+    autoload -Uz vcs_info
+    zstyle ':vcs_info:git:*' formats 'on branch %b'
+ 
     #   Adjust ZSH's history to be more useful like BASH
     HISTFILE=$HOME/.zsh_history
     HISTSIZE=4500
@@ -143,27 +159,56 @@ function updatePrompt()
 {
     if [ ${ZSH_VERSION} ]; then
         # Zsh prompt expansion syntax
-        #PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-        #PS1="%B"
-        #PS1+="%(?.%F{green}.%F{red})%!"
-        #PS1+="%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white}"
-        #PS1+=" > %b%f"
+        PS1='%B%(?.%F{green}.%F{red})%!'
+        PS1+='%F{white}:'
+        PS1+='%F{cyan}%n'
+        PS1+='%F{yellow}@'
+        PS1+='%F{cyan}%mM'
+        PS1+='%F{white}:'
+        PS1+='%F{green}%~'
         
-        # Zsh prompt expansion syntax (Swami prompt)
-        # PS1='%B%(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-        # (JB Prompt) 
-        # Full PATH,Active Dir, Colors
-        # PS1='%~% > %b%f'
-        # PS1='%d%(%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-        PS1='%d%  > %b%f'
-        # PS1='%d(?.%F{green}.%F{red})%!%F{white}:%F{cyan}%n%F{yellow}@%F{cyan}%M%F{white}:%F{green}%~%F{white} > %b%f'
-        # Set Right Prompt, Date Time
-        # RPS1='%D{%F %T}'
-        RPS1=%F{red}'%t %W%F'    
+        if [ -e .git/config ]; then
+            PS1+='%F{white} ('
+            PS1+="%F{yellow}"
+            PS1+='$(__git_ps1 " (%s)")\$ '
+            PS1+="%F{white} )"
+        fi
+        
+        PS1+='%F{white}>'
+        PS1+='%F{green}'
+
+        #RPS1=%F{red}'%t %W%F'    
 
     elif [ ${BASH_VERSION} ]; then
         # Bash prompt expansion syntax
-        PS1="\e[93m\]\!\[\e[97m\]:\[\e[96m\]\u\[\e[93m\]@\[\e[96m\]\h\[\e[97m\]:\[\e[32m\]\w\[\e[97m\] > \[\e[0m\]"
+        local EXIT="$?"
+
+        PS1="\001"
+        PS1+="$(tput bold)"
+        if [ $EXIT != 0 ]; then
+            PS1+="$(tput setaf 1)\!"
+        else
+            PS1+="$(tput setaf 2)\!"
+        fi
+
+        PS1+="$(tput setaf 7):"
+        PS1+="$(tput setaf 6)\u"
+        PS1+="$(tput setaf 3)@"
+        PS1+="$(tput setaf 6)\h"
+        PS1+="$(tput setaf 7):"
+        PS1+="$(tput setaf 2)\W"
+
+        if [ -e .git/config ]; then
+            PS1+="$(tput setaf 7) ("
+            PS1+="$(tput setaf 3)"
+            PS1+="$(__git_ps1 ' %s')"
+            PS1+="$(tput setaf 7) )"
+        fi
+
+        #   Finish the prompt
+        PS1+="$(tput setaf 7) > "
+        PS1+="$(tput sgr0)"
+        PS1+="\002"
     fi
 }
 
