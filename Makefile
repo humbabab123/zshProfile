@@ -21,9 +21,9 @@ PROJECT := $(notdir $(shell pwd))
 
 DATE := `date +"%m%d%Y_%H%M%S"`
 
-SOURCES	:= $(wildcard *.sh)
-OBJECTS	:= $(patsubst %.sh,%,$(SOURCES))
-UILD_LOCATION		:= build
+SOURCES				:= $(wildcard *.sh)
+OBJECTS				:= $(patsubst %.sh,%,$(SOURCES))
+BUILD_LOCATION		:= build
 DIST_LOCATION 		:= dist
 RELEASE_LOCATION	:= $(HOME)
 
