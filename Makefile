@@ -98,10 +98,6 @@ inst:
 #   Informational Targets
 #
 ###############################################################################
-help:
-	@echo "         PROJECT : $(PROJECT)"
-
-
 info:
 	@echo "         PROJECT : $(PROJECT)"
 	@echo "         VERSION : $(VERSION)"
