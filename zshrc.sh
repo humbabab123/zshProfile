@@ -25,6 +25,7 @@
 ################################################################################
 if [ -e $HOME/.environ ]; then
     source $HOME/.environ
+    updatePath
 fi
 
 
@@ -36,7 +37,3 @@ fi
 if [ -e $HOME/.aliases ]; then
     source $HOME/.aliases
 fi
-
-#   Run my updatePath function to make sure my PATH variable is what I expect
-updatePath
-updatePrompt

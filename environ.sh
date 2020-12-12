@@ -24,22 +24,31 @@
 #
 ################################################################################
 PLATFORM=`uname`
+
 GREP_COLORS="ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=3"
 
-#   Git Environment Variables
-GIT_PS1_DESCRIBE_STYLE="contains"
-GIT_PS1_SHOWCOLORHINTS=True
-GIT_PS1_SHOWDIRTYSTATE=True
-GIT_PS1_SHOWUNTRACKEDFILES=True
-GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_STATESEPARATOR=' '
+###############################################################################
+#
+#   Git Prompt Environment Variables
+#
+###############################################################################
+if [ -e $HOME/.git-prompt ]; then
+    source $HOME/.git-prompt
+    GIT_PS1_DESCRIBE_STYLE="contains"
+    GIT_PS1_SHOWCOLORHINTS=True
+    GIT_PS1_SHOWDIRTYSTATE=True
+    GIT_PS1_SHOWUNTRACKEDFILES=True
+    GIT_PS1_SHOWUPSTREAM="auto"
+    GIT_PS1_STATESEPARATOR=' '
+fi
+
 
 ###############################################################################
 #
 #   Define ZSH Specific Settings
 #
 ###############################################################################
-if [ ${ZSH_VERSION} ]; then
+if [ ${ZSH_VERSION} ]; then    
     #   Set the prompt
     precmd() { updatePrompt; }
 
@@ -159,25 +168,22 @@ function updatePrompt()
 {
     if [ ${ZSH_VERSION} ]; then
         # Zsh prompt expansion syntax
-        PS1='%B%(?.%F{green}.%F{red})%!'
-        PS1+='%F{white}:'
-        PS1+='%F{cyan}%n'
-        PS1+='%F{yellow}@'
-        PS1+='%F{cyan}%mM'
-        PS1+='%F{white}:'
-        PS1+='%F{green}%~'
-        
-        if [ -e .git/config ]; then
-            PS1+='%F{white} ('
+        PS1="%B%(?.%F{green}.%F{red})%!"
+        PS1+="%F{white}:"
+        PS1+="%F{cyan}%n"
+        PS1+="%F{yellow}@"
+        PS1+="%F{cyan}%m"
+        PS1+="%F{white}:"
+        PS1+="%F{green}%~"
+        if [[ -e $HOME/.git-prompt && -e .git/config ]]; then
+            PS1+="%F{white} ("
             PS1+="%F{yellow}"
-            PS1+='$(__git_ps1 " (%s)")\$ '
-            PS1+="%F{white} )"
+            PS1+="$(__git_ps1 '%s')"
+            PS1+="%F{white})"
         fi
-        
-        PS1+='%F{white}>'
-        PS1+='%F{green}'
-
-        #RPS1=%F{red}'%t %W%F'    
+        PS1+="%F{white} > "
+        PS1+="%B"
+        PS1+="%F{green}"
 
     elif [ ${BASH_VERSION} ]; then
         # Bash prompt expansion syntax
@@ -190,18 +196,16 @@ function updatePrompt()
         else
             PS1+="$(tput setaf 2)\!"
         fi
-
         PS1+="$(tput setaf 7):"
         PS1+="$(tput setaf 6)\u"
         PS1+="$(tput setaf 3)@"
         PS1+="$(tput setaf 6)\h"
         PS1+="$(tput setaf 7):"
         PS1+="$(tput setaf 2)\W"
-
-        if [ -e .git/config ]; then
+        if [[ -e $HOME/.git-prompt && -e .git/config ]]; then
             PS1+="$(tput setaf 7) ("
             PS1+="$(tput setaf 3)"
-            PS1+="$(__git_ps1 ' %s')"
+            PS1+="$(__git_ps1 '%s')"
             PS1+="$(tput setaf 7) )"
         fi
 
