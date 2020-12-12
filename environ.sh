@@ -175,12 +175,14 @@ function updatePrompt()
         PS1+="%F{cyan}%m"
         PS1+="%F{white}:"
         PS1+="%F{green}%~"
+
         if [[ -e $HOME/.git-prompt && -e .git/config ]]; then
             PS1+="%F{white} ("
             PS1+="%F{yellow}"
             PS1+="$(__git_ps1 '%s')"
             PS1+="%F{white})"
         fi
+
         PS1+="%F{white} > "
         PS1+="%B"
         PS1+="%F{green}"
@@ -202,6 +204,7 @@ function updatePrompt()
         PS1+="$(tput setaf 6)\h"
         PS1+="$(tput setaf 7):"
         PS1+="$(tput setaf 2)\W"
+
         if [[ -e $HOME/.git-prompt && -e .git/config ]]; then
             PS1+="$(tput setaf 7) ("
             PS1+="$(tput setaf 3)"

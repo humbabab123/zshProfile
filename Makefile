@@ -25,9 +25,7 @@ BUILD_LOCATION	:= build
 DIST_LOCATION 	:= dist
 INST_LOCATION	:= $(HOME)
 
-VPATH			:= $(BUILD_LOCATION) \
-					   $(DIST_LOCATION)
-
+VPATH			:= $(BUILD_LOCATION) $(DIST_LOCATION)
 HOSTS			:= mac-mini MBPJBHD1 MBPJBHD2
 
 ###############################################################################
@@ -107,6 +105,9 @@ help:
 info:
 	@echo "         PROJECT : $(PROJECT)"
 	@echo "         VERSION : $(VERSION)"
+	@echo ""
+	@echo "\r         SCRIPTS : \c"
+	@$(foreach SCRIPT, $(SCRIPTS), echo "$(SCRIPT)\n                   \c";)
 	@echo ""
 	@echo "\r         SOURCES : \c"
 	@$(foreach SOURCE, $(SOURCES), echo "$(SOURCE)\n                   \c";)
