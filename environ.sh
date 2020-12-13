@@ -228,6 +228,3 @@ function vscode()
     echo "\033[37;1mLaunching VSCode...\033[0m"
     eval "$VSCODE_LOCATION/code"
 }
-
-#   Before sending control back to the startup file make sure the path has been updated
-updatePath
